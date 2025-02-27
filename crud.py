@@ -81,7 +81,8 @@ def listar_mensagens():
     for mensagem in mensagens:
         emissor_nome = mensagem.emissor.nome if mensagem.emissor else "Desconhecido"
         receptor_nome = mensagem.receptor.nome if mensagem.receptor else "Desconhecido"
-        tree.insert("", tk.END, values=(mensagem.id, emissor_nome, receptor_nome, mensagem.texto))
+        data_formatada = mensagem.data_hora.strftime("%d/%m/%Y")
+        tree.insert("", tk.END, values=(mensagem.id, emissor_nome, receptor_nome, mensagem.texto, data_formatada))
 
 def excluir_mensagem():
     selected_item = tree.selection()
@@ -159,12 +160,13 @@ tk.Button(frame, text="Testar Conexão", command=testar_conexao).grid(row=6, col
 tree_frame = tk.Frame(root)
 tree_frame.pack(fill="both", expand=True)
 
-columns = ("ID", "Emissor", "Receptor", "Texto")
+columns = ("ID", "Emissor", "Receptor", "Texto", "Data")
 tree = ttk.Treeview(tree_frame, columns=columns, show="headings")
 tree.column("ID", width=50, anchor="center")
 tree.column("Emissor", anchor="center")
 tree.column("Receptor", anchor="center")
 tree.column("Texto", anchor="center")
+tree.column("Data", anchor="center")
 for col in columns:
     tree.heading(col, text=col, anchor="center")
 tree.pack(fill="both", expand=True)

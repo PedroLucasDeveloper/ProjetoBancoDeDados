@@ -1,3 +1,8 @@
+# AlUNO: Pedro Lucas Silva dos Santos
+# MATRICULA: 554973
+#---------------------------------------------------------
+# Importação de bibliotecas
+
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
@@ -117,6 +122,20 @@ def editar_mensagem():
     else:
         messagebox.showerror("Erro", "Selecione uma mensagem para editar")
 
+# Função para testar a conexão com o banco de dados usando psycopg2
+def testar_conexao():
+    try:
+        conn = psycopg2.connect(
+            dbname="BHS_ProjetoFBD",
+            user="postgres",
+            password="",
+            host="localhost"
+        )
+        conn.close()
+        messagebox.showinfo("Sucesso", "Conexão com o banco de dados bem-sucedida!")
+    except Exception as e:
+        messagebox.showerror("Erro", f"Falha na conexão com o banco de dados: {e}")
+
 frame = tk.Frame(root, padx=10, pady=10)
 frame.pack(fill="both", expand=True)
 
@@ -135,6 +154,7 @@ texto_entry.grid(row=2, column=1, padx=5, pady=5)
 tk.Button(frame, text="Adicionar Mensagem", command=adicionar_mensagem).grid(row=3, column=0, columnspan=2, pady=10)
 tk.Button(frame, text="Editar Mensagem", command=editar_mensagem).grid(row=4, column=0, columnspan=2, pady=10)
 tk.Button(frame, text="Excluir Mensagem", command=excluir_mensagem).grid(row=5, column=0, columnspan=2, pady=10)
+tk.Button(frame, text="Testar Conexão", command=testar_conexao).grid(row=6, column=0, columnspan=2, pady=10)
 
 tree_frame = tk.Frame(root)
 tree_frame.pack(fill="both", expand=True)
